@@ -5,6 +5,8 @@ import http from 'http';
 
 export default class Server {
 
+    private static _instance: Server;
+
     public app: express.Application; 
     public hostname: string;
     public port: number;
@@ -35,6 +37,10 @@ export default class Server {
             console.log('Cliente conectado.');
         })
         console.log('***** End Escuchar conexiones - socket *****');
+    }
+
+    public static get instance() {
+        return this._instance || ( this._instance = new this() );
     }
 
 }

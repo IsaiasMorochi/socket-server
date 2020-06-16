@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 import socketIO from 'socket.io';
 
-const server = new Server();
+const server = Server.instance;
 
 // BodyParser (Serializa los objetos)
 server.app.use( bodyParser.urlencoded({ extended: true }));
