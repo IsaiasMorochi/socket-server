@@ -3,6 +3,8 @@ import { environment } from '../environments/environment'
 import socketIO from 'socket.io';
 import http from 'http';
 
+import * as socket from '../sockets/socket';
+
 export default class Server {
 
     private static _instance: Server;
@@ -35,8 +37,12 @@ export default class Server {
         console.log('***** Start Escuchar conexiones - socket *****');
         this.io.on('connection', client => {
             console.log('Cliente conectado.');
-        })
-        console.log('***** End Escuchar conexiones - socket *****');
+
+            //Desconectar
+            socket.disconnect( client );
+
+        });
+        
     }
 
     public static get instance() {
