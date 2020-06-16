@@ -34,13 +34,13 @@ export default class Server {
     }
 
     private listenSockets() {
-        console.log('***** Start Escuchar conexiones - socket *****');
+        
         this.io.on('connection', client => {
             console.log('Cliente conectado.');
 
             // Mensajes
-            socket.message( client );
-            
+            socket.message( client, this.io );
+
             //Desconectar
             socket.disconnect( client );
 
