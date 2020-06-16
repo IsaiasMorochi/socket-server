@@ -38,11 +38,14 @@ export default class Server {
         this.io.on('connection', client => {
             console.log('Cliente conectado.');
 
+            // Mensajes
+            socket.message( client );
+            
             //Desconectar
             socket.disconnect( client );
 
         });
-        
+
     }
 
     public static get instance() {

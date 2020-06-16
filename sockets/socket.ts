@@ -7,3 +7,12 @@ export const disconnect = ( client: Socket ) => {
     });
 
 }
+
+// escuchar mensajes
+export const message = ( client: Socket ) => {
+    client.on('message', ( payload: { de: string, body: string }) => {
+        console.log('***** Start Mensaje *****');
+        console.log('Mensaje recibido: ', payload);
+        console.log('***** End Mensaje *****');
+    });
+}
