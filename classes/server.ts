@@ -36,12 +36,19 @@ export default class Server {
     private listenSockets() {
         
         this.io.on('connection', client => {
-            console.log('Cliente conectado.');
+
+            // console.log( client.id );
+            
+            // Conectar cliente
+            socket.connectClient( client );
+
+            // Configurar usuario
+            socket.configUser( client, this.io );
 
             // Mensajes
             socket.message( client, this.io );
 
-            //Desconectar
+            // Desconectar
             socket.disconnect( client );
 
         });
