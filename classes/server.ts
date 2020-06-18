@@ -24,7 +24,6 @@ export default class Server {
         // socket necesita recibir la conf del servidor (Http)
         this.httpServer = new http.Server(this.app);
         this.io = socketIO( this.httpServer );
-
         this.listenSockets();
 
     }
@@ -37,10 +36,8 @@ export default class Server {
         
         this.io.on('connection', client => {
 
-            // console.log( client.id );
-            
             // Conectar cliente
-            socket.connectClient( client, this.io );
+            socket.connectClient( client );
 
             // Configurar usuario
             socket.configUser( client, this.io );
@@ -50,6 +47,9 @@ export default class Server {
 
             // Desconectar
             socket.disconnect( client, this.io );
+
+            // Obtener usuarios en linea
+            socket.getOnlineUsers( client, this.io );
 
         });
 

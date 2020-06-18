@@ -41,7 +41,7 @@ export class InMemoryCacheUserRepository implements UserRespository {
     }
 
     public getListUsers(): User[] {
-        return this.listUsers.filter( user => user.username != 'sin-nombre');
+        return this.listUsers.filter( user => user.username !== 'sin-name');
     }
 
     getUserInRom( room: string ): any {

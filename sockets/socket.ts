@@ -5,7 +5,7 @@ import { User } from '../classes/user';
 
 export const usersConnected: UserRespository = new InMemoryCacheUserRepository();
 
-export const connectClient = ( client: Socket, io: SocketIO.Server ) => {
+export const connectClient = ( client: Socket ) => {
     const user = new User( client.id );
     console.log('Cliente conectado.');
     usersConnected.addUser( user );
@@ -28,7 +28,7 @@ export const message = ( client: Socket, io: SocketIO.Server ) => {
 }
 
 export const configUser = ( client: Socket, io: SocketIO.Server ) => {
-    client.on('config-user', ( payload: { username: string }, callback: Function) => {
+    client.on( 'config-user', ( payload: { username: string }, callback: Function) => {
         console.log('Configurando usuario: ', payload);
         usersConnected.updateNameById( client.id , payload.username );
         io.emit('online-users', usersConnected.getListUsers() );
@@ -36,5 +36,12 @@ export const configUser = ( client: Socket, io: SocketIO.Server ) => {
             ok: true,
             message: `Usuario ${ payload.username }, configurado.`
         })
+    });
+}
+
+export const getOnlineUsers = ( client: Socket, io: SocketIO.Server ) => {
+    client.on('get-users', () => {
+        // Enviamos al usuario que se esta conectando
+        io.to( client.id ).emit('online-users', usersConnected.getListUsers() );
     });
 }
