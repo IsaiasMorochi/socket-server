@@ -5,16 +5,17 @@ import { User } from '../classes/user';
 
 export const usersConnected: UserRespository = new InMemoryCacheUserRepository();
 
-export const connectClient = ( client: Socket ) => {
+export const connectClient = ( client: Socket, io: SocketIO.Server ) => {
     const user = new User( client.id );
     console.log('Cliente conectado.');
     usersConnected.addUser( user );
 }
 
-export const disconnect = ( client: Socket ) => {
+export const disconnect = ( client: Socket, io: SocketIO.Server ) => {
     client.on('disconnect', () => {
         console.log('Cliente desconectado.');
         usersConnected.deleteUser( client.id );
+        io.emit('online-users', usersConnected.getListUsers() );
     });
 }
 
@@ -30,6 +31,7 @@ export const configUser = ( client: Socket, io: SocketIO.Server ) => {
     client.on('config-user', ( payload: { username: string }, callback: Function) => {
         console.log('Configurando usuario: ', payload);
         usersConnected.updateNameById( client.id , payload.username );
+        io.emit('online-users', usersConnected.getListUsers() );
         callback({
             ok: true,
             message: `Usuario ${ payload.username }, configurado.`
