@@ -1,8 +1,32 @@
 import { Router, Request, Response, request } from 'express';
 import Server from '../classes/server';
 import { usersConnected } from '../sockets/socket';
+import { GraphData } from '../classes/graph';
 
 const router = Router();
+
+const graph = new GraphData();
+
+router.get('/grafica', (req: Request, res: Response) => {
+    res.json( graph.getDataGraph() );
+});
+
+router.post('/grafica', (req: Request, res: Response) => {
+    
+    const month = req.body.month;
+    const values = Number(req.body.values);
+
+    graph.increaseValue( month, values );
+
+    const server = Server.instance;
+
+    // Se emite el evento que el grafico cambio.
+    server.io.emit( 'change-graph', graph.getDataGraph() );
+
+    res.json( graph.getDataGraph() );
+    
+});
+
 
 router.get('/mensajes', (req: Request, res: Response) => {
     res.json({
