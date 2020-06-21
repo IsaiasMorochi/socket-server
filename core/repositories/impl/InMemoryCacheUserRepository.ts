@@ -1,5 +1,5 @@
-import { User } from "./user";
-import { UserRespository } from './UserRepository'
+import { User } from "../../models/User";
+import { UserRespository } from '../UserRepository'
 
 export class InMemoryCacheUserRepository implements UserRespository {
 

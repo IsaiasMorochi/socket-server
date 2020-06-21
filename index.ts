@@ -1,4 +1,4 @@
-import Server from "./classes/server";
+import Server from "./core/server";
 import router from "./routes/router";
 import bodyParser from "body-parser";
 import cors from 'cors';

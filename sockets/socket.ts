@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
-import { UserRespository } from '../classes/UserRepository';
-import { InMemoryCacheUserRepository } from '../classes/InMemoryCacheUserRepository';
-import { User } from '../classes/user';
+import { UserRespository } from '../core/repositories/UserRepository';
+import { InMemoryCacheUserRepository } from '../core/repositories/impl/InMemoryCacheUserRepository';
+import { User } from '../core/models/User';
 
 export const usersConnected: UserRespository = new InMemoryCacheUserRepository();
 

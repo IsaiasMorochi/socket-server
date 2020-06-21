@@ -1,11 +1,13 @@
-import { Router, Request, Response, request } from 'express';
-import Server from '../classes/server';
+import { Router, Request, Response } from 'express';
 import { usersConnected } from '../sockets/socket';
-import { GraphData } from '../classes/graph';
+import { GraphData } from '../core/graph';
+import Server from '../core/server';
+import { QuizData } from '../core/quiz';
 
 const router = Router();
 
 const graph = new GraphData();
+const quiz = new QuizData();
 
 router.get('/grafica', (req: Request, res: Response) => {
     res.json( graph.getDataGraph() );
@@ -27,6 +29,26 @@ router.post('/grafica', (req: Request, res: Response) => {
     
 });
 
+
+router.get('/encuesta', (req: Request, res: Response) => {
+    res.json( quiz.getDataQuestion() );
+});
+
+router.post('/encuesta', (req: Request, res: Response) => {
+    
+    const question = req.body.question;
+    const values = Number(req.body.values);
+
+    quiz.increaseValue( question, values );
+
+    const server = Server.instance;
+
+    // Se emite el evento que el grafico cambio.
+    server.io.emit( 'change-quiz', quiz.getDataQuestion() );
+
+    res.json( quiz.getDataQuestion() );
+    
+});
 
 router.get('/mensajes', (req: Request, res: Response) => {
     res.json({
