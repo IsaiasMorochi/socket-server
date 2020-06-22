@@ -1,7 +1,8 @@
 import { Marker } from "./marker";
 
 export class Map {
-    private markers: Marker[] = []
+    
+    public markers: Marker[] = []
 
     constructor() {}
 
@@ -27,5 +28,5 @@ export class Map {
             }
         }
     }
-    
+
 }

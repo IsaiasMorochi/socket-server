@@ -2,6 +2,7 @@ import { Socket } from 'socket.io';
 import { UserRespository } from '../core/repositories/UserRepository';
 import { InMemoryCacheUserRepository } from '../core/repositories/impl/InMemoryCacheUserRepository';
 import { User } from '../core/models/User';
+import { map } from '../routes/router';
 
 export const usersConnected: UserRespository = new InMemoryCacheUserRepository();
 
@@ -43,5 +44,15 @@ export const getOnlineUsers = ( client: Socket, io: SocketIO.Server ) => {
     client.on('get-users', () => {
         // Enviamos al usuario que se esta conectando
         io.to( client.id ).emit('online-users', usersConnected.getListUsers() );
+    });
+}
+
+
+// Mapas
+export const newMarker = ( client: Socket, io: SocketIO.Server ) => {
+    client.on( 'marker-new', (marker) => {
+        map.setMarker( marker );
+        // io.emit( 'marker-new', marker );
+        client.broadcast.emit( 'marker-new', marker );
     });
 }

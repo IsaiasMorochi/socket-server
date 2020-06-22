@@ -51,6 +51,9 @@ export default class Server {
             // Obtener usuarios en linea
             socket.getOnlineUsers( client, this.io );
 
+            // Mapas
+            socket.newMarker( client, this.io );
+
         });
 
     }

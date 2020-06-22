@@ -3,8 +3,41 @@ import { usersConnected } from '../sockets/socket';
 import { GraphData } from '../core/graph';
 import Server from '../core/server';
 import { QuizData } from '../core/quiz';
+import { Map } from '../core/map';
 
 const router = Router();
+
+// Mapa
+export const map = new Map();
+const places = [
+    {
+      id: '1',
+      name: 'Los Pioneros',
+      lat: -17.795249,
+      lng: -63.168701
+    },  
+    {
+      id: '2',
+      name: 'Salteñas la Pionola',
+      lat: -17.792491,
+      lng: -63.169903
+    }, 
+    {
+      id: '3',
+      name: 'Renta Dignidad',
+      lat: -17.792867,
+      lng: -63.166345
+    } 
+];
+
+map.markers.push( ...places );
+
+router.get('/mapa', (req: Request, res: Response) => {
+    res.json( map.getMarkers() );
+});
+
+
+
 
 const graph = new GraphData();
 const quiz = new QuizData();
