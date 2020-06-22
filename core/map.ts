@@ -15,7 +15,7 @@ export class Map {
     }
 
     deleteMarker( id: string ) {
-        this.markers = this.markers.filter( marker => marker.id = id );
+        this.markers = this.markers.filter( marker => marker.id === id );
         return this.markers;
     }
 

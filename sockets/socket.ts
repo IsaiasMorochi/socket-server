@@ -49,10 +49,17 @@ export const getOnlineUsers = ( client: Socket, io: SocketIO.Server ) => {
 
 
 // Mapas
-export const newMarker = ( client: Socket, io: SocketIO.Server ) => {
+export const newMarker = ( client: Socket ) => {
     client.on( 'marker-new', (marker) => {
         map.setMarker( marker );
         // io.emit( 'marker-new', marker );
         client.broadcast.emit( 'marker-new', marker );
+    });
+}
+
+export const deleteMarker = ( client: Socket ) => {
+    client.on( 'marker-delete', (id: string) => {
+        map.deleteMarker( id );
+        client.broadcast.emit( 'marker-delete', id );
     });
 }
