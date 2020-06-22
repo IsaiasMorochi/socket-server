@@ -20,10 +20,10 @@ export class Map {
     }
 
     moveMarker( marker: Marker ) {
-        for (const key in this.markers) {
-            if (this.markers.hasOwnProperty(key)) {
-                this.markers[key].lat = marker.lat;
-                this.markers[key].lng = marker.lng;
+        for (const index in this.markers) {
+            if (this.markers[index].id === marker.id ) {
+                this.markers[index].lat = marker.lat;
+                this.markers[index].lng = marker.lng;
                 break;
             }
         }

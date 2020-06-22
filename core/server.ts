@@ -56,6 +56,8 @@ export default class Server {
 
             socket.deleteMarker( client );
 
+            socket.moveMarker( client );
+
         });
 
     }

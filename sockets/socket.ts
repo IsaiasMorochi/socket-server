@@ -3,6 +3,7 @@ import { UserRespository } from '../core/repositories/UserRepository';
 import { InMemoryCacheUserRepository } from '../core/repositories/impl/InMemoryCacheUserRepository';
 import { User } from '../core/models/User';
 import { map } from '../routes/router';
+import { Marker } from '../core/marker';
 
 export const usersConnected: UserRespository = new InMemoryCacheUserRepository();
 
@@ -61,5 +62,13 @@ export const deleteMarker = ( client: Socket ) => {
     client.on( 'marker-delete', (id: string) => {
         map.deleteMarker( id );
         client.broadcast.emit( 'marker-delete', id );
+    });
+}
+
+
+export const moveMarker = ( client: Socket ) => {
+    client.on( 'marker-move', (marker: Marker) => {
+        map.moveMarker( marker )
+        client.broadcast.emit( 'marker-move', marker );
     });
 }
